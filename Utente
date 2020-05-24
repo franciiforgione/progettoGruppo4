@@ -1,0 +1,109 @@
+
+/**
+ * 
+ */
+package model;
+
+import java.util.List;
+
+/**
+ * @author Francesca Forgione
+ *
+ */
+public class Utente {
+
+	private String codiceUtente;
+	private char tipoUtente;
+	private List<Prodotto> listaAcquisti;
+	private String cognome,nome,email; // TODO le variabili private hanno bisogno di get e set per avere accesso ai dati
+
+	/**
+	 * @return the codiceUtente
+	 */
+	public String getCodiceUtente() {
+		return codiceUtente;
+	}
+	/**
+	 * @param codiceUtente the codiceUtente to set
+	 */
+	public void setCodiceUtente(String codiceUtente) {
+		this.codiceUtente = codiceUtente;
+	}
+	/**
+	 * @return the tipoUtente
+	 */
+	public char getTipoUtente() {
+		return tipoUtente;
+	}
+	/**
+	 * @param tipoUtente the tipoUtente to set
+	 */
+	public void setTipoUtente(char tipoUtente) {
+		this.tipoUtente = tipoUtente;
+	}
+	/**
+	 * @return the listaAcquisti
+	 */
+	public List<Prodotto> getListaAcquisti() {
+		return listaAcquisti;
+	}
+	/**
+	 * @param listaAcquisti the listaAcquisti to set
+	 */
+	public void setListaAcquisti(List<Prodotto> listaAcquisti) {
+		this.listaAcquisti = listaAcquisti;
+	}
+
+	/**
+	 * @return the cognome
+	 */
+	public String getCognome() {
+		return cognome;
+	}
+	/**
+	 * @param cognome the cognome to set
+	 */
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+	/**
+	 * @return the nome
+	 */
+	public String getNome() {
+		return nome;
+	}
+	/**
+	 * @param nome the nome to set
+	 */
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Utente() {
+		super();
+	}
+	public Utente(String codiceUtente, char tipoUtente, List<Prodotto> listaAcquisti) {
+		super();
+		this.codiceUtente = codiceUtente;
+		this.tipoUtente = tipoUtente;
+		this.listaAcquisti = listaAcquisti;
+	}
+	/*
+	 * created by Lorenzo Bolognesi
+	 * */
+	
+
+
+
+}
