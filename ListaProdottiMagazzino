@@ -1,0 +1,31 @@
+/**
+ * 
+ */
+package utils;
+
+import model.Prodotto;
+
+/**
+ * @author Francesca Forgione
+ *
+ */
+public class ListaProdottiMagazzino {
+
+	Prodotto prodotto1 = new Prodotto("cuffie","1",10.00,5);
+	Prodotto prodotto2 = new Prodotto("bibita","2",5.00,36);
+	Prodotto prodotto3 = new Prodotto("occhiali da sole","3",350.00,100);
+	Prodotto prodotto4 = new Prodotto("tv","4",1000.00,10);
+	Prodotto prodotto5 = new Prodotto("popsocket","5",2.00,300);
+
+
+	/**
+	 * @author Lorenzo Bolognesi
+	 *
+	 */
+	
+	Prodotto prod1 = new Prodotto("tv","6",85,559);
+	Prodotto prod2 = new Prodotto("tablet","7",70,289);
+	Prodotto prod3 = new Prodotto("smartphone","8",150,210);
+	Prodotto prod4 = new Prodotto("pc","9",75,670);
+
+}
