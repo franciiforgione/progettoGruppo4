@@ -1,0 +1,98 @@
+/**
+ * 
+ */
+package model;
+
+/**
+ * @author Francesca Forgione
+ *
+ */
+public class Prodotto {
+
+	private String nomeProdotto;
+	private String codiceProdotto;
+	private int quantitaComprata;
+	private double prezzo;
+	private int quantita;
+
+	/**
+	 * @return the codiceProdotto
+	 */
+	public String getCodiceProdotto() {
+		return codiceProdotto;
+	}
+	/**
+	 * @param codiceProdotto the codiceProdotto to set
+	 */
+	public void setCodiceProdotto(String codiceProdotto) {
+		this.codiceProdotto = codiceProdotto;
+	}
+	/**
+	 * @return the prezzo
+	 */
+	public double getPrezzo() {
+		return prezzo;
+	}
+	/**
+	 * @param prezzo the prezzo to set
+	 */
+	public void setPrezzo(double prezzo) {
+		this.prezzo = prezzo;
+	}
+	/**
+	 * @return the quantita
+	 */
+	public int getQuantita() {
+		return quantita;
+	}
+	/**
+	 * @param quantita the quantita to set
+	 */
+
+	public void setQuantita(int quantita) {
+		this.quantita = quantita;
+	}
+
+	/**
+	 * @return the nomeProdotto
+	 */
+	public String getNomeProdotto() {
+		return nomeProdotto;
+	}
+	/**
+	 * @param nomeProdotto the nomeProdotto to set
+	 */
+	public void setNomeProdotto(String nomeProdotto) {
+		this.nomeProdotto = nomeProdotto;
+		
+	}	public Prodotto(String nomeProdotto, String codiceProdotto, double prezzo, int quantita) {
+		super();
+		this.nomeProdotto = nomeProdotto;
+		this.codiceProdotto = codiceProdotto;
+		this.prezzo = prezzo;
+		this.quantita = quantita;
+	}
+
+	public int acquista(int quantitaComprata){
+		quantita=quantita-quantitaComprata;
+		return quantita;
+	}
+	public Prodotto() {
+		super();
+	}
+
+	
+	public void acquitalol(int quantitaComprata) {
+		this.quantita = quantita - quantitaComprata;
+	}
+
+	public void rifornimento(int quant){
+		this.quantita=quantita+quant;
+	}
+	public int getQuantitaComprata() {
+		// TODO Auto-generated method stub
+		return quantitaComprata;
+	}
+
+
+}
