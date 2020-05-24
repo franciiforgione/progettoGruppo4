@@ -1,25 +1,19 @@
 
 /**
- * 
- */
-/**
- * @author computer
-
- *
+ * @author Forgione Francesca 
+ * @author Bolognesi Lorenzo
  */
 package main;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
+
 
 import model.Prodotto;
 import model.Utente;
-import utils.ListaProdottiMagazzino;
+
 import utils.Utils;
 
 public class Main {
@@ -36,21 +30,13 @@ public class Main {
 		Utils utils = new Utils();
 		String risposta ;
 		String nuovaOperazione = null;
-		//	Vector<Prodotto> v = new Vector<Prodotto>(9);
-		List<Prodotto> listaProdotti = new ArrayList<Prodotto>();
 		Utente utente = new Utente();
 		utils.caricaProdotti(); // metodo che carica una lsta di 9 prodotti di base
-		utils.acquistaProdotto(prodotto);
-		//Prodotto prodottoMagazzino = new Prodotto ();
-
 
 		do {
 			System.out.println("Scegli il tipo di utente: A = amministratore, U = utente, N = nuovo utente");
 			a = input.readLine();
 			tipoUtente = a.charAt(0);
-
-			int quantitaIniziale;
-
 
 			switch (tipoUtente) {
 			case 'U':
@@ -62,7 +48,7 @@ public class Main {
 					prodotto = utils.cercaProdotto(codiceProdotto);
 
 					if (prodotto.getCodiceProdotto() != null) { // controllo che il prodotto sia valorizzato quindi che sia stato trovato
-						System.out.println("Si vuole acquistare il prodotto cercato? SI/NO");
+						System.out.println("Si vuole acquistare il prodotto " + prodotto.getNomeProdotto()+ "cercato? SI/NO");
 						risposta = tast.next(); // TODO verificare che funzioni con boolean
 						if (risposta.toUpperCase().equalsIgnoreCase("SI")) {
 							System.out.println("Selezionare la quantità desiderata, max disponibile: " + prodotto.getQuantita());
@@ -72,12 +58,12 @@ public class Main {
 								+". Riprovare!");
 							}else {
 								prodotto = utils.acquistaProdotto(prodotto);
-								prodotto.acquitalol(quantitaComprata);
+
 								System.out.println("Prodotto acquistato -  codice: " + prodotto.getCodiceProdotto() 
 								+", quantità: "+quantitaComprata
 								+", nome: "+prodotto.getNomeProdotto()
 								+". prezzo:"+prodotto.getPrezzo());
-								System.out.println("La quantità rimanente in magazzino è: "+prodotto.getQuantita());
+								System.out.println("La quantità rimanente in magazzino è: "+prodotto.acquista(quantitaComprata));
 
 							}
 
@@ -90,46 +76,36 @@ public class Main {
 					nuovaOperazione = tast.next();
 
 				} while (nuovaOperazione.toUpperCase().equalsIgnoreCase("SI"));
-				quantitaIniziale=prodotto.getQuantita();
-
-
 				break;
+
+				/**
+				 * @author Bolognesi Lorenzo
+				 */
 
 			case 'A':	
 
 
 				System.out.println("Inserisci il codice del prodotto che si vuole rifornire");
 
-				codiceProdotto = tast.next();
-				System.out.println("Test1 quantita"+ prodotto.getQuantita());
-				if (prodotto != null) {
-					//svuotare prodotto e salvare ciò che c'era
-					
+				codiceProdotto = tast.next(); // l'utente mi dice il codice prodotto
+
+				prodotto = utils.cercaProdotto(codiceProdotto); // cerco il prodotto in base al codice dato dal' utente
+				if (prodotto.getCodiceProdotto() != null) { 
+					System.out.println("La quantita disponibile attualmente è: "+ prodotto.getQuantita()); // dico all utente quanto prodotto c'è nel magazzino in questo momento
+
+					System.out.println("Inserisci la quantita che vuoi aggiungere ");
+					int quant = tast.nextInt();
+					int tot = quant +prodotto.getQuantita();
+					System.out.println("Ci sono "+tot+" "+prodotto.getNomeProdotto());
+				}else {
+					System.out.println("Prodotto non trovato");
 				}
-				prodotto = utils.cercaProdotto(codiceProdotto);
-				System.out.println("Test2 quantita"+ prodotto.getQuantita());
-
-
-				int totale = 0;
-				if(totale <= 3){ 
-					if(codiceProdotto.equals(prodotto.getCodiceProdotto())){
-						System.out.println("Inserisci la quantita che vuoi aggiungere ");
-						int quant = tast.nextInt();
-						
-						System.out.println("Test3 quantita"+ prodotto.getQuantita());
-
-						prodotto.rifornimento(quant);
-
-						System.out.println("Test4 quantita"+ prodotto.getQuantita());
-
-						System.out.println("Ci sono "+prodotto.getQuantita()+" "+prodotto.getNomeProdotto());
-					} else System.out.println("Prodotto non trovato");
-				} else System.out.println("Non c'è bisogno di rifornire"); 
-				System.out.println("Test5 quantita"+ prodotto.getQuantita());
 
 
 				break;
-
+				/*
+				 * @author Forgione Francesca
+				 */
 			case 'N':
 				// essendo un nuovo utente fa una registrazione
 				String cognome;
@@ -145,7 +121,8 @@ public class Main {
 					x = false;
 					System.out.println("Inserisci l'email: ");
 					email = tast.nextLine();
-					if (!email.contains("@") || email.length()<=5) {
+					if (!email.contains("@") || email.length()<=5 
+							&& !email.contains(".it") || !email.contains(".com")) {
 						System.out.println("Email non valida, mancante @ o lunghezza minore di 5. Inserire nuovamente");
 						x= true;
 					}
