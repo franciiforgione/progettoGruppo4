@@ -1,0 +1,108 @@
+
+/**
+ * 
+ */
+package utils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.Vector;
+
+import model.Magazzino;
+import model.Prodotto;
+import model.Utente;
+
+/**
+ * @author Francesca Forgione
+ *
+ */
+public class Utils { // classe di metodi utili applicabili al negozio
+
+	Scanner tast = new Scanner(System.in);
+	Prodotto prodottoFinale = new Prodotto(); // istanza di classe
+	Magazzino magazzino = new Magazzino();
+	Utente utente = new Utente();
+	List<Prodotto> listaProdotti = new ArrayList<Prodotto>();
+	ListaProdottiMagazzino listaProdottiMagazzino = new ListaProdottiMagazzino();
+
+	public Prodotto cercaProdotto(String codiceProdottoUtente) {//  modificatore response nomeMtodo(tipoRequest nomeRequest)
+		for( Prodotto prodottoMagazzino : magazzino.getProdotti()) { //ciclo la lista di prodotti presenti in magazzino
+			if(prodottoMagazzino.getCodiceProdotto().equalsIgnoreCase(codiceProdottoUtente)) { //verifica che codiceProdotto magazzino sia uguale al codiceProdotto utente
+				prodottoFinale.setCodiceProdotto(prodottoMagazzino.getCodiceProdotto());//valorizza il prodotto finale prendendo i valori dal prodotto in magazzino
+				prodottoFinale.setPrezzo(prodottoMagazzino.getPrezzo());;
+				prodottoFinale.setQuantita(prodottoMagazzino.getQuantita());
+				prodottoFinale.setNomeProdotto(prodottoMagazzino.getNomeProdotto());
+			}else { // entro nel caso in cui il codiceProdotto del magazzino non sia uguale al codiceProdotto dell'utente
+				prodottoFinale.getNomeProdotto();// valorizza il prodotto finale con una stringa 
+				//prodottoFinale.setCodiceProdotto(null);//valorizza il codiceProdotto a nulll
+
+			}
+		}
+		return prodottoFinale;
+	}
+
+	public Prodotto acquistaProdotto(Prodotto prodotto) { //P 1234 78 4567 098765 asdfghj 
+		utente.setListaAcquisti(listaProdotti);
+		// eliminare da lista prodotti magazzino quindi diminuisco la quantità del prodotto nel magazzino
+		for( Prodotto prodottoMagazzino : magazzino.getProdotti()) {
+			int i = prodottoMagazzino.getQuantita();
+			if(prodottoMagazzino.getCodiceProdotto().equalsIgnoreCase(prodotto.getCodiceProdotto())) {
+				prodottoMagazzino.setQuantita(i--);
+			}
+		}
+
+		return prodotto;
+	}
+
+	public Magazzino caricaProdotti() { // metodo che carica una lista di prodotti di base all interno del magazzino
+
+		listaProdotti.add(listaProdottiMagazzino.prodotto1);
+		listaProdotti.add(listaProdottiMagazzino.prodotto2);
+		listaProdotti.add(listaProdottiMagazzino.prodotto3);
+		listaProdotti.add(listaProdottiMagazzino.prodotto4);
+		listaProdotti.add(listaProdottiMagazzino.prodotto5);
+		/*
+		 * @author Bolognesi Lorenzo
+		 */
+		listaProdotti.add(listaProdottiMagazzino.prod1);
+		listaProdotti.add(listaProdottiMagazzino.prod2);
+		listaProdotti.add(listaProdottiMagazzino.prod3);
+		listaProdotti.add(listaProdottiMagazzino.prod4);
+
+
+		magazzino.setProdotti(listaProdotti);
+		return magazzino;
+	}
+	
+/*
+ *  @author Bolognesi Lorenzo
+ */
+	public Utente inserimentoDati(String nome,String cognome,String email){ 
+		Utente utente = new Utente();
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		String codiceUtente = "";
+		int lenght = 6;
+		Random rand = new Random();
+		char[] text = new char[lenght];
+
+		for(int i=0;i<lenght;i++){
+			text[i] = characters.charAt(rand.nextInt(characters.length())); 
+		} 
+		for(int i=0;i<text.length;i++){
+			codiceUtente = codiceUtente + text[i];
+		}
+		System.out.println("Codice utente: "+codiceUtente);
+
+		utente.setNome(nome);
+		utente.setCognome(cognome);
+		utente.setEmail(email);
+		utente.setCodiceUtente(codiceUtente);
+		return utente; 
+	}
+
+
+
+
+}
