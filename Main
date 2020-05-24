@@ -1,0 +1,184 @@
+
+/**
+ * 
+ */
+/**
+ * @author computer
+
+ *
+ */
+package main;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.Vector;
+
+import model.Prodotto;
+import model.Utente;
+import utils.ListaProdottiMagazzino;
+import utils.Utils;
+
+public class Main {
+
+	public static void main(String[] args) throws IOException {
+
+		BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+
+		Scanner tast = new Scanner(System.in);
+		String a;
+		char tipoUtente;
+		String codiceProdotto;
+		Prodotto prodotto = new Prodotto();
+		Utils utils = new Utils();
+		String risposta ;
+		String nuovaOperazione = null;
+		//	Vector<Prodotto> v = new Vector<Prodotto>(9);
+		List<Prodotto> listaProdotti = new ArrayList<Prodotto>();
+		Utente utente = new Utente();
+		utils.caricaProdotti(); // metodo che carica una lsta di 9 prodotti di base
+		utils.acquistaProdotto(prodotto);
+		//Prodotto prodottoMagazzino = new Prodotto ();
+
+
+		do {
+			System.out.println("Scegli il tipo di utente: A = amministratore, U = utente, N = nuovo utente");
+			a = input.readLine();
+			tipoUtente = a.charAt(0);
+
+			int quantitaIniziale;
+
+
+			switch (tipoUtente) {
+			case 'U':
+
+				do {
+					System.out.println("Inserisci codice prodotto che si vuole ricercare");
+
+					codiceProdotto = tast.next();
+					prodotto = utils.cercaProdotto(codiceProdotto);
+
+					if (prodotto.getCodiceProdotto() != null) { // controllo che il prodotto sia valorizzato quindi che sia stato trovato
+						System.out.println("Si vuole acquistare il prodotto cercato? SI/NO");
+						risposta = tast.next(); // TODO verificare che funzioni con boolean
+						if (risposta.toUpperCase().equalsIgnoreCase("SI")) {
+							System.out.println("Selezionare la quantità desiderata, max disponibile: " + prodotto.getQuantita());
+							int quantitaComprata = tast.nextInt();
+							if (quantitaComprata >prodotto.getQuantita()) {
+								System.out.println("Quantità richiesta non sufficiente, max quantità disponibile: "+prodotto.getQuantita()
+								+". Riprovare!");
+							}else {
+								prodotto = utils.acquistaProdotto(prodotto);
+								prodotto.acquitalol(quantitaComprata);
+								System.out.println("Prodotto acquistato -  codice: " + prodotto.getCodiceProdotto() 
+								+", quantità: "+quantitaComprata
+								+", nome: "+prodotto.getNomeProdotto()
+								+". prezzo:"+prodotto.getPrezzo());
+								System.out.println("La quantità rimanente in magazzino è: "+prodotto.getQuantita());
+
+							}
+
+						}
+					}else {
+						System.out.println("Prodotto non trovato");
+					}
+					System.out.println("si vuole fare una nuova operazione? SI/NO");
+
+					nuovaOperazione = tast.next();
+
+				} while (nuovaOperazione.toUpperCase().equalsIgnoreCase("SI"));
+				quantitaIniziale=prodotto.getQuantita();
+
+
+				break;
+
+			case 'A':	
+
+
+				System.out.println("Inserisci il codice del prodotto che si vuole rifornire");
+
+				codiceProdotto = tast.next();
+				System.out.println("Test1 quantita"+ prodotto.getQuantita());
+				if (prodotto != null) {
+					//svuotare prodotto e salvare ciò che c'era
+					
+				}
+				prodotto = utils.cercaProdotto(codiceProdotto);
+				System.out.println("Test2 quantita"+ prodotto.getQuantita());
+
+
+				int totale = 0;
+				if(totale <= 3){ 
+					if(codiceProdotto.equals(prodotto.getCodiceProdotto())){
+						System.out.println("Inserisci la quantita che vuoi aggiungere ");
+						int quant = tast.nextInt();
+						
+						System.out.println("Test3 quantita"+ prodotto.getQuantita());
+
+						prodotto.rifornimento(quant);
+
+						System.out.println("Test4 quantita"+ prodotto.getQuantita());
+
+						System.out.println("Ci sono "+prodotto.getQuantita()+" "+prodotto.getNomeProdotto());
+					} else System.out.println("Prodotto non trovato");
+				} else System.out.println("Non c'è bisogno di rifornire"); 
+				System.out.println("Test5 quantita"+ prodotto.getQuantita());
+
+
+				break;
+
+			case 'N':
+				// essendo un nuovo utente fa una registrazione
+				String cognome;
+				String nome;
+				String email;
+				boolean x;
+				System.out.println("Inserisci il cognome: ");
+				cognome = tast.nextLine();
+				String cogn = tast.nextLine();
+				System.out.println("Inserisci il nome: ");
+				nome = tast.nextLine();
+				do{
+					x = false;
+					System.out.println("Inserisci l'email: ");
+					email = tast.nextLine();
+					if (!email.contains("@") || email.length()<=5) {
+						System.out.println("Email non valida, mancante @ o lunghezza minore di 5. Inserire nuovamente");
+						x= true;
+					}
+				} while(x == true);
+
+				utente = utils.inserimentoDati(nome,cognome,email);
+				System.out.println("Registrazione avvenuta correttamente");
+				System.out.println("Riepilogo: "+ "nome: "+utente.getNome()
+				+", cogome: "+utente.getCognome()
+				+", email: "+utente.getEmail()
+				+", codice utente: "+utente.getCodiceUtente());
+				break;
+			}
+
+
+			BufferedReader br =  new BufferedReader(new InputStreamReader (System.in));
+			System.out.print("Si desidera continuare? S/N: ");
+			a = br.readLine();
+		}
+		while (a.equals("S") || a.equals("s"));
+
+		System.out.println("Grazie, arrivederci");
+
+
+
+
+
+	} 
+
+
+
+
+
+
+
+}
